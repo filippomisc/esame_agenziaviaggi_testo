@@ -8,10 +8,15 @@ public class Agenzia {
 	
 	
 	private List<Cliente> clienti;
+	
 	private int id;
+	Map<Integer, Pratica> pratiche;
+	
+	
 	
 	public Agenzia() {
 		clienti = new ArrayList<Cliente>();
+		pratiche = new TreeMap<Integer, Pratica>();
 		id = 1000;
 		
 	}
@@ -68,36 +73,51 @@ public class Agenzia {
 	}
 	
 	public int nuovaPratica(String descrizione, String cognome, String nome, String indirizzo){
-
+/*
 		int tempId = id;
 		
+		Cliente cliente = cercaCliente(cognome, nome, indirizzo);
 		
-		Cliente cliente = new Cliente(cognome, nome, indirizzo);
-		Collection<Pratica> praticheDiCliente = cliente.elencoPratiche();
+		praticheDiCliente = cliente.getPratiche();
+		
 		Pratica pratica = new Pratica(tempId, descrizione, cliente);
 		
 		
-		if(!praticheDiCliente.contains(pratica)) {
+		if(praticheDiCliente.isEmpty() || !praticheDiCliente.containsValue(pratica)) {
+			
+			praticheDiCliente.put(tempId, pratica);
+			
+			id++;			
+		}
+			
+		return pratica.getId();     */
+		
+		int tempId = id;
+		Cliente cliente = cercaCliente(cognome, nome, indirizzo);
+		Pratica pratica = new Pratica(tempId, descrizione, cliente);
+		  
+		  		
+			
+		if(pratiche.isEmpty() || !pratiche.containsValue(pratica)) {
+			
+			pratiche.put(tempId, pratica);
+			
+			cliente.getPratiche().put(tempId, pratica);
+			
+			id++;			
+		}
 			
 			
-			List<Pratica> p = (List<Pratica>) cliente.elencoPratiche();
-			
-			p.add(pratica);
-			
-			id++;
-			
-			return tempId;
-		}else
-			return pratica.getId();
+		return tempId;
+		 
+		 
 	}
 	
 	public Pratica getPratica(int idPratica) throws EccezionePraticaInesistente{
 		
-		Pratica pratica = null; 
-		
-		for (Cliente c : clienti) {
-			
-			 pratica = c.controlloEsistenzaPratica(idPratica);
+	Pratica pratica = this.pratiche.get(idPratica);
+	
+	
 				
 //				
 //			
@@ -109,9 +129,9 @@ public class Agenzia {
 //				throw new EccezionePraticaInesistente();
 //			
 //			}
-		}
 		
-		if(pratica == null)
+		
+		if(pratiche.isEmpty() || pratica == null)
 			throw new EccezionePraticaInesistente();
 		
 		return pratica;
@@ -119,16 +139,20 @@ public class Agenzia {
 	
 	public void eliminaPratica(int idPratica) throws EccezionePraticaInesistente{
 		
-		Pratica pratica = null;
-		for (Cliente cliente : clienti) {
-			pratica = cliente.controlloEsistenzaPratica(idPratica);
-			 }
+		Pratica pratica = this.pratiche.get(idPratica);
+		Cliente cliente = pratica.getCliente();
 		
-		if (pratica != null) {
-			for (Cliente cliente : clienti)
-				cliente.rimuoviPratica(idPratica);
-		}else
+		if(pratiche.isEmpty() || pratica == null)
 			throw new EccezionePraticaInesistente();
+		else {
+			pratiche.remove(pratica.getId());
+			
+			
+			Map<Integer, Pratica> praticheDiCliente = cliente.getPratiche();
+			
+			praticheDiCliente.remove(pratica.getId());
+			
+		}
 		
 	}
 	

@@ -137,8 +137,16 @@ public class Cliente implements Comparable{
 
 	public void rimuoviPratica(int idPratica) {
 
-		if(pratiche.containsKey(idPratica))
+		if(pratiche.containsKey(idPratica)) {
 			pratiche.remove(idPratica);
+			
+		}
+		
+	}
+
+	public Map<Integer, Pratica> getPratiche() {
+		return pratiche;
 	}
 	
+
 }

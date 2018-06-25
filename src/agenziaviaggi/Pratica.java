@@ -15,6 +15,11 @@ public class Pratica{
 		this.cliente = cliente;
 	}
 
+	@Override
+	public String toString() {
+		return descrizione + " - " + cliente;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -29,6 +34,10 @@ public class Pratica{
 	}
 	
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
 	public void aggiungiPrenotazione(Prenotazione prenotazione){
 	}
 	

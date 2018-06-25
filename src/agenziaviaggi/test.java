@@ -25,8 +25,24 @@ public class test {
 //		System.out.println(agenzia.getCienti());
 		System.out.println(agenzia.elencoClienti().toString());
 		
-		Cliente c = agenzia.cercaCliente("miscioscia", "giuseppe", "via Bachelet 25");
+		Cliente c = agenzia.cercaCliente("Miscioscia", "Giuseppe", "Via Bachelet 25");
 		System.out.println("Cliente trovato: " + c.toString());
+		
+		
+		agenzia.nuovaPratica("viaggio MIAMI", "Miscioscia", "Giuseppe", "Via Bachelet 25");
+		agenzia.nuovaPratica("viaggio NY", "Miscioscia", "Giuseppe", "Via Bachelet 25");
+		
+				try {
+			agenzia.eliminaPratica(1000);
+			
+		} catch (EccezionePraticaInesistente e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		System.out.println(c.getPratiche().toString());
+		
+
 
 	}
 
