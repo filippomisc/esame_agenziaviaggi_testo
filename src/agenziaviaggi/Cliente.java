@@ -14,6 +14,7 @@ public class Cliente implements Comparable{
 	
 	
 	
+	
 //	public Cliente(int codice, String cognome, String nome, String indirizzo) {
 //		this.cognome = cognome;
 //		this.nome = nome;

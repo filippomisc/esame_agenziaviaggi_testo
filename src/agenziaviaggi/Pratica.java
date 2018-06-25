@@ -1,18 +1,26 @@
 package agenziaviaggi;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Pratica{
 	
 	private int id;
 	private String descrizione;
 	private Cliente cliente;
+	private List<Prenotazione> prenotazioni;
 	
 	
 	public Pratica(int id, String descrizione, Cliente cliente) {
 		this.id = id;
 		this.descrizione = descrizione;
 		this.cliente = cliente;
+		prenotazioni = new ArrayList<Prenotazione>();
+	}
+
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
 	}
 
 	@Override
@@ -39,10 +47,19 @@ public class Pratica{
 	}
 
 	public void aggiungiPrenotazione(Prenotazione prenotazione){
+		if(prenotazioni.isEmpty() || !prenotazioni.contains(prenotazione))
+			prenotazioni.add(prenotazione);
+			
 	}
 	
 	public double getImportoTotale(){
-		return -1.0;
+		double result = 0.0;
+		for (Prenotazione prenotazione : prenotazioni) {
+			double importoIesimo = prenotazione.getImporto();
+			result += importoIesimo;
+			
+		}
+		return result;
 	}
 	
 	public Collection<Prenotazione> elencoPrenotazioniPerImporto()
