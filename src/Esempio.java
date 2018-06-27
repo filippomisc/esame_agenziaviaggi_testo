@@ -139,7 +139,7 @@ public class Esempio {
 		
 		System.out.println("Elenco dei clienti le cui pratiche superano l'importo totale di 500 euro (ordine alfabetico crescente):");
 		
-		clienti = (List<Cliente>) agenzia.elencoClientiSelezionati(500);
+		clienti = (List<Cliente>) agenzia.elencoClientiSelezionati(300);
 		for(int i=0;i<clienti.size();i++){
 			Cliente tempc = clienti.get(i);
 			System.out.println(""+tempc.getCognome()+", "+tempc.getNome()+", "+tempc.getIndirizzo());

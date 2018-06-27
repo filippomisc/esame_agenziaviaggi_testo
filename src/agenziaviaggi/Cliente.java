@@ -2,6 +2,8 @@ package agenziaviaggi;
 
 import java.util.*;
 
+
+
 public class Cliente implements Comparable{
 	
 	private int codice;
@@ -106,7 +108,21 @@ public class Cliente implements Comparable{
 	}
 
 	public Collection<Pratica> elencoPratiche(){
-		return pratiche.values();
+		
+		//non posso ordinare una mappa secondo altri criteri....
+		 
+		
+		 //copio la collezione della Mappa di pratiche
+		Collection<Pratica> collectionPratiche = pratiche.values();
+		
+		//creo una lista e la popolo di valori della collezione
+		ArrayList<Pratica> elencoP = new ArrayList<Pratica>();
+		elencoP.addAll(collectionPratiche);
+		
+		//usare l'intefaccia COOMPARABLE per ordinare secondo il criterio migliore richiesto
+		Collections.sort(elencoP);
+		
+		return elencoP;
 	}
 
 	public int compareTo(Object obj) {
@@ -148,6 +164,5 @@ public class Cliente implements Comparable{
 	public Map<Integer, Pratica> getPratiche() {
 		return pratiche;
 	}
-	
 
 }

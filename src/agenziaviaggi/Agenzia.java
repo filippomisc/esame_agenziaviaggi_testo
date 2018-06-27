@@ -2,7 +2,6 @@ package agenziaviaggi;
 
 import java.util.*;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 
 public class Agenzia {
 	
@@ -157,15 +156,53 @@ public class Agenzia {
 	}
 	
 	public Collection<Pratica> elencoPratiche(){
-		return null;
+		//non posso ordinare una mappa secondo altri criteri....
+		 
+			//copio la collezione della Mappa di pratiche
+		Collection<Pratica> collectionPratiche = pratiche.values();
+		 
+		
+		//creo una lista e la popolo di valori della collezione
+		ArrayList<Pratica> elencoP = new ArrayList<Pratica>();
+		elencoP.addAll(collectionPratiche);
+		
+		//usare l'intefaccia COOMPARABLE per ordinare secondo il criterio migliore richiesto
+		Collections.sort(elencoP);
+		
+		return elencoP;
 	}
 
 	public double calcolaImportoPerPeriodo(String da, String a){
-		return -1.0;
+		
+		double result = 0.0;
+		
+		for (Pratica pratica : this.pratiche.values()) {
+			double importo = pratica.calcolaImportoPerPeriodo(da, a);
+			result += importo;
+		}
+		return result;
 	}
 	
+	
 	public Collection<Cliente> elencoClientiSelezionati(double importo){
-		return null;
+		
+		List<Cliente> resultList = new ArrayList<Cliente>();
+		
+		
+		for(Pratica pratica : pratiche.values()) {
+			if(pratica.getImportoTotale()>importo) {
+				
+				Cliente cliente = pratica.getCliente();
+				
+				if(!resultList.contains(cliente))
+					resultList.add(cliente);
+				
+			}	
+		}
+		
+		Collections.sort(resultList);
+		
+		return resultList;
 	}
 	
 	public String getCienti() {

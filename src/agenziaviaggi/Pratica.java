@@ -2,9 +2,10 @@ package agenziaviaggi;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-public class Pratica{
+public class Pratica implements Comparable{
 	
 	private int id;
 	private String descrizione;
@@ -62,14 +63,70 @@ public class Pratica{
 		return result;
 	}
 	
-	public Collection<Prenotazione> elencoPrenotazioniPerImporto()
-	{
-		return null;
+	
+	public double calcolaImportoPerPeriodo(String da, String a) {
+		
+		double result = 0.0;
+		
+//		String dataI = "";
+//		String dataF = "";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		for(Prenotazione prenotazione : this.prenotazioni) {
+			
+			if(prenotazione instanceof PrenotazioneAlbergo) {
+				
+				if(((PrenotazioneAlbergo) prenotazione).getDataCheckIn().compareTo(da)>=0 && ((PrenotazioneAlbergo) prenotazione).getDataCheckIn().compareTo(a)<=0) {
+					
+					double importoIesimo = prenotazione.getImporto();
+					result += importoIesimo;
+				}
+					
+			}else if(prenotazione instanceof PrenotazioneVolo) {
+				
+
+				if(((PrenotazioneVolo) prenotazione).getDataArrivo().compareTo(da)>=0 && ((PrenotazioneVolo) prenotazione).getDataArrivo().compareTo(a)<=0) {
+					
+					double importoIesimo = prenotazione.getImporto();
+					result += importoIesimo;
+				}
+			
+//			double importoIesimo = prenotazione.getImporto();
+//			result += importoIesimo;
+			
+			}
+			
+//		return result;
+		}
+		return result;
+	}
+	
+	public Collection<Prenotazione> elencoPrenotazioniPerImporto(){
+
+		List<Prenotazione> temp = this.prenotazioni;
+		Collections.sort(temp, new ComparatoreDiPrenotazioniPerImporto());
+		
+		return temp;
 	}
 
-	public Collection<Prenotazione> elencoPrenotazioniPerData()
-	{
-		return null;
+	public Collection<Prenotazione> elencoPrenotazioniPerData() {
+		
+		List<Prenotazione> temp = this.prenotazioni;
+		Collections.sort(temp, new ComparatoreDiPrenotazioniPerData());
+		
+		return temp;
 	}
 
 	@Override
@@ -93,4 +150,13 @@ public class Pratica{
 			return false;
 		return true;
 	}
+
+
+	public int compareTo(Object o) {
+		Pratica altra = (Pratica) o;
+		return (int) -(this.getImportoTotale()-altra.getImportoTotale());
+
+	}
+
+
 }
